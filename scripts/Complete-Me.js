@@ -6,8 +6,6 @@ class CompleteMe {
   insert(word) {
     this.words.push(word);
     this.count();
-    console.log(this);
-
   }
 
   count() {
