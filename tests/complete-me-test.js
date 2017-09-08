@@ -130,7 +130,7 @@ describe('CompleteMe Tests', () => {
 
     it('should import dictionary to completion object', (done) => {
       completion.populate(dictionary);
-      expect(completion.wordTotal).to.equal(235886);
+      expect(completion.wordTotal).to.equal(234371);
       done()
     }).timeout(40000);
 
@@ -161,7 +161,7 @@ describe('CompleteMe Tests', () => {
       completion.select("broke");
       completion.select("brown");
       let selection = completion.suggest("bro");
-      
+
       expect(selection[0]).to.deep.equal("bronco");
       expect(selection[1]).to.deep.equal("broke");
       expect(selection[2]).to.deep.equal("brown");
