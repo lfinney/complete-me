@@ -1,11 +1,10 @@
-const AddLetter = require('./Add-Letter');
+const AddLetter = require('./AddLetter');
 
 
 class CompleteMe {
   constructor() {
     this.directory = null;
     this.wordTotal = 0;
-    // this.matchingPrefix = [];
   }
 
   insert(word) {
@@ -25,9 +24,10 @@ class CompleteMe {
       nextLetter = nextLetter.child[letter];
     });
 
-    nextLetter.endOfWord = true;
-    this.wordTotal++;
-
+    if (!nextLetter.endOfWord) {
+      nextLetter.endOfWord = true;
+      this.wordTotal++;
+    }
   }
 
 
@@ -36,16 +36,10 @@ class CompleteMe {
   }
 
   suggest(query) {
-    let prefixSearch = [...query.toLowerCase()];
-    let currentNode = this.directory;
     let matchingWords = [];
-
-    for (let i = 0; i < prefixSearch.length; i++) {
-      currentNode = currentNode.child[prefixSearch[i]]
-    }
+    let currentNode = this.findAWord(query);
 
     const findWord = (query, currentNode) => {
-
       const keys = Object.keys(currentNode.child);
 
       for (let j = 0; j < keys.length; j++) {
@@ -53,25 +47,47 @@ class CompleteMe {
         let foundWord = query.concat(nextLetter.letter);
 
         if (nextLetter.endOfWord) {
-          matchingWords.push(foundWord)
+          matchingWords.push({word: foundWord, frequency: nextLetter.frequency})
         }
         findWord(foundWord, nextLetter);
       }
     };
-    findWord(query, currentNode);
 
+    findWord(query, currentNode);
     if (query && currentNode.endOfWord) {
-      matchingWords.push(query)
+      matchingWords.push({word: query, frequency: currentNode.frequency})
     }
 
-    console.log(matchingWords);
-    return matchingWords;
+    matchingWords.sort( (a, b) => {
+      return b.frequency - a.frequency
+    });
+
+
+    return matchingWords.map( (wordObjects) => {
+      return wordObjects['word']
+    });
   }
 
   populate(index) {
     index.forEach( (word) => {
       this.insert(word);
     });
+  }
+
+  findAWord(query) {
+    let prefixSearch = [...query.toLowerCase()];
+    let currentNode = this.directory;
+
+    for (let i = 0; i < prefixSearch.length; i++) {
+      currentNode = currentNode.child[prefixSearch[i]];
+    }
+    return currentNode
+  }
+
+  select(selection) {
+    let selectedWord = this.findAWord(selection);
+
+    selectedWord.frequency++
   }
 }
 

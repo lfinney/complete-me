@@ -3,6 +3,7 @@ class AddLetter {
     this.letter = letter;
     this.endOfWord = false;
     this.child = {};
+    this.frequency = 0;
   }
 }
 
