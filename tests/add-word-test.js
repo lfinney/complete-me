@@ -1,5 +1,5 @@
-import { expect, assert } from 'chai';
-import AddLetter from '../scripts/Add-Letter';
+import { expect } from 'chai';
+import AddLetter from '../scripts/AddLetter';
 let addLetter;
 
 describe('AddLetter Tests', () => {

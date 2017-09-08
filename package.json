@@ -1,7 +1,7 @@
 {
-  "name": "TDD",
+  "name": "CompleteMe",
   "version": "1.0.0",
-  "description": "",
+  "description": "Search function for prefix inputs",
   "main": "index.js",
   "directories": {
     "test": "tests"
@@ -10,8 +10,8 @@
     "test": "mocha --compilers js:babel-core/register tests"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Luke Finney et al",
+  "license": "WTFPL",
   "devDependencies": {
     "babel-cli": "^6.22.2",
     "babel-core": "^6.22.1",
